@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Nav from './component/Header/Nav.js';
 import Main from './component/Main/Main.js'
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {Route} from 'react-router-dom';
 
@@ -61,10 +61,6 @@ function App() {
   let paths=['/Home', '/Blog', '/Tools'];
   const classes=useStyles();
 
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
 
 
   return (

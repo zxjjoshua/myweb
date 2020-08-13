@@ -1,7 +1,5 @@
 import React from 'react';
-import propTypes from 'prop-types'
 import post1 from "./Blog/blog-post.1.md"
-import Markdown from "react-markdown"
 
 export default class Home extends React.Component{
     constructor(props){

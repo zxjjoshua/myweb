@@ -1,5 +1,4 @@
 import React from 'react';
-import propTypes from 'prop-types'
 import Postcard from './Blog/Postcard.js'
 import { Route,Switch } from 'react-router-dom';
 import Post from './Blog/Post.js';
@@ -7,7 +6,8 @@ import { withStyles} from "@material-ui/core/styles";
 
 const style = theme =>({
     root:{
-        color:"dark",
+        color:"Dark",
+        width:"100%",
     },
     blogFrame:{
         padding:"40px",
@@ -17,20 +17,11 @@ const style = theme =>({
 class Blog extends React.Component{
     constructor(props){
         super(props)
-        console.log("this is Blog com", props.match.params)
         this.state={
-            mycontext:'hello, the Home',
-            mypost:"unable to load",
+
         }
     }
     componentDidMount(){
-        // fetch(post1)
-        // .then((response)=>{return response.text()})
-        // .then((text)=>{
-        //     this.setState({
-        //         mypost:text,
-        //     })
-        // });
     }
     
 

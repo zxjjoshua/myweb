@@ -1,8 +1,6 @@
 import React from 'react';
-import propTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {Button, AppBar, Icon} from '@material-ui/core';
-import {Tabs,Tab,TabPanel} from '@material-ui/core';
+import { AppBar} from '@material-ui/core';
 import './Nav.css'
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -11,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -21,13 +18,13 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import BuildIcon from '@material-ui/icons/Build';
 
 function GetIcon(i){
-    if (i==0){
+    if (i===0){
       return <HomeIcon/>;
     }
-    else if (i==1){
+    else if (i===1){
       return <DescriptionIcon/>;
     }
-    else if (i==2){
+    else if (i===2){
       return <BuildIcon/>;
     }
     else{
@@ -42,7 +39,6 @@ export default class Nav extends React.Component{
     // const classes = useStyles(0);
     constructor(props){
         super(props);
-        let tmp=props.route.location.pathname;
         this.state={
             topics:props.topics,
             paths:props.paths,
@@ -58,7 +54,6 @@ export default class Nav extends React.Component{
         let window=undefined;
         let topics=this.state.topics;
         let paths=this.state.paths;
-        let root='';
         const classes=this.state.classes;
         // const theme = useTheme();
         const container = window !== undefined ? () => window().document.body : undefined;
@@ -68,6 +63,10 @@ export default class Nav extends React.Component{
             this.setState({
                 current:this.state.topics[value],
             });
+            if (this.state.mobileOpen){
+              handleDrawerToggle();
+            }
+            
         }
 
         const handleDrawerToggle = () => {

@@ -3,7 +3,6 @@ import Blog from './Blog.js';
 import Tools from './Tools.js';
 import Home from './Home.js';
 import {Route, Switch} from 'react-router-dom';
-import post1 from "./Blog/blog-post.1.md";
 
 export default class Main extends React.Component{
     constructor(props){
