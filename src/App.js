@@ -1,38 +1,87 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Nav from './component/Header/Nav.js';
 import Main from './component/Main/Main.js'
-import Sidebar from './component/Sidebar.js'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { FullscreenExit } from '@material-ui/icons';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import {Route} from 'react-router-dom';
 
 
-const useStyles=makeStyles((theme)=>({
-  root:{
-    display:'flex',
+const drawerWidth = 240;
+const headerhight = 64;
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
   },
-  sidebar:{
-    display:'box',
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
   },
-  Main: {
+  appBar: {
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
     flexGrow: 1,
     padding: theme.spacing(3),
   },
-}))
+  link:{
+    textDecoration:'none',
+    color:'inherit',
+  },
+  main:{
+    marginTop: headerhight,
+  },
+  postcard:{
+    width: '100%',
+  }
+
+}));
+
+
 
 function App() {
   let topics=['Home', 'Blog', 'Tools'];
-  let paths=['Home', 'Blog', 'Tools'];
+  let paths=['/Home', '/Blog', '/Tools'];
   const classes=useStyles();
+
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+
   return (
-    <div className="App">
-      <Nav topics={topics} paths={paths}/>
+
+    <div className={classes.root}>
+      <CssBaseline />
+      
+      <Route path="/" render={(props)=><Nav topics={topics} paths={paths} classes={classes} route={props} />}/>
+      
+      {/* <Drawer classes={classes} drawerWidth={drawerWidth}/> */}
+
+    {/* <Nav topics={topics} paths={paths}/>
       <div>
       <Sidebar topics={topics} className={classes.sidebar}/>
       <Main className={classes.Main}/>
-      </div>
-      
+      </div> */}
+    <Main classes={classes}/>
     </div>
   );
 }

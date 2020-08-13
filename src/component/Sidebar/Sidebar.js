@@ -2,16 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
+
+// import Drawer from '@material-ui/core/Drawer';
+import Drawer from './Drawer.js'
 import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
+
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -63,27 +58,27 @@ export default function Sidebar(props){
     const topics=props.topics
     const classes = useStyles();
     const theme = useTheme();
-    const [mobileOpen, setMobileOpen] = React.useState(false);
+    
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
-    const drawer = (
-        <div>
-          <div className={classes.toolbar} />
-          <Divider />
-          <List>
-            {topics.map((text, index) => (
-              <ListItem button key={text}>
-                <ChevronRightIcon></ChevronRightIcon>
-                <ListItemText primary={text} to={'Home'}/>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-        </div>
-      );
+    // const drawer = (
+    //     <div>
+    //       <div className={classes.toolbar} />
+    //       <Divider />
+    //       <List>
+    //         {topics.map((text, index) => (
+    //           <ListItem button key={text}>
+    //             <ChevronRightIcon></ChevronRightIcon>
+    //             <ListItemText primary={text} to={'Home'}/>
+    //           </ListItem>
+    //         ))}
+    //       </List>
+    //       <Divider />
+    //     </div>
+    //   );
     const container = props.window !== undefined ? () => props.window().document.body : undefined;
     return(
         <nav className={classes.drawer} aria-label="mailbox folders">
@@ -101,12 +96,12 @@ export default function Sidebar(props){
                 ModalProps={{
                 keepMounted: true, // Better open performance on mobile.
                 }}
+                topics={topics} classes={classes}
             >
-                {drawer}
             </Drawer>
             </Hidden>
             <Hidden xsDown implementation="css">
-            <Drawer
+            {/* <Drawer
                 classes={{
                 paper: classes.drawerPaper,
                 }}
@@ -114,7 +109,8 @@ export default function Sidebar(props){
                 open
             >
                 {drawer}
-            </Drawer>
+            </Drawer> */}
+            <Drawer topics={topics} classes={classes}/>
             </Hidden>
         </nav>
     )

@@ -7,14 +7,22 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
-    // maxWidth: 345,
+    maxWidth: 500,
     margin:20
   },
   media: {
     height: 140,
+  },
+  content:{
+    height: 140,
+  },
+  link:{
+    textDecoration:'none',
+    color:'inherit',
   },
 });
 
@@ -22,17 +30,14 @@ export default function Postcard(props) {
   const classes = useStyles();
   const post = props.post;
   console.log(post);
+  const curPath="/Blog";
   return (
     
     <div>
     <Card className={classes.root}>
+      <Link to={curPath+post.link} className={classes.link}>
       <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="Contemplative Reptile"
-        />
-        <CardContent>
+        <CardContent className={classes.content}>
           <Typography gutterBottom variant="h5" component="h2">
             {post.title}
           </Typography>
@@ -41,14 +46,7 @@ export default function Postcard(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
+      </Link>
     </Card>
     </div>
   );
