@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+pre{
+  background-color: #212141;
+  border-radius: 5px;
+  padding: 5px;
+  font-family:monospace ;
+}
+
+code{
+  color: aliceblue;
+  font-family: monospace;
+  font-size: 120%;
+}

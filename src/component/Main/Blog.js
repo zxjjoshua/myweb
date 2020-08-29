@@ -10,39 +10,51 @@ const style = theme =>({
         width:"100%",
     },
     blogFrame:{
-        padding:"40px",
-    }
+        padding:"50px",
+        backgroundColor:"white",
+    },
+
 })
 
 class Blog extends React.Component{
     constructor(props){
         super(props)
         this.state={
-
+            posts:null,
         }
     }
-    componentDidMount(){
+    componentWillMount(){
+        const url="/BlogConfig.json";
+        const Header=new Headers({
+            "Content-Type": "text/json",
+            Accept: "text/json"
+          });
+        fetch(url)
+        .then((response)=>{return response.json()})
+        .then((posts)=>{
+            console.log(posts);
+            this.setState({
+            posts:posts["Blog"]
+        })},
+        (error)=>{
+            console.log(error);
+        }
+        );
     }
     
 
     render(){
         const classes=this.props.classes;
-        let posts=[
-            {
-                title:'first passage',
-                brief:"this is brief this is brief this is brief this is brief this is brief this is brief this is brief this is brief",
-                link:'/Post/blog-post.1.md'
-            },
-            {
-                title:'second passage',
-                brief:"this is brief",
-                link:'/Post/blog-post.2.md'
-            }
-        ]
         let images=["../../../../public/logo192.png","../../../../public/logo192.png"];
-        const postbody=posts.map((post,i)=>{
-            return (<Postcard key={i} post={post} image={images[i]}/>)
-        })
+        let postbody=null;
+        if (this.state.posts!=null){
+            console.log(this.state.posts);
+            postbody=this.state.posts.map((post,i)=>{
+                return (<Postcard key={i} post={post} image={images[i]}/>)
+            })
+        }
+        
+        
         return (
             <div className={classes.root}>
                 <Switch>

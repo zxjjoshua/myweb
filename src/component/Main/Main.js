@@ -3,6 +3,7 @@ import Blog from './Blog.js';
 import Tools from './Tools.js';
 import Home from './Home.js';
 import {Route, Switch} from 'react-router-dom';
+import NotFound404 from '../DefaultPage/NotFound404.js'
 
 export default class Main extends React.Component{
     constructor(props){
@@ -21,6 +22,7 @@ export default class Main extends React.Component{
                     <Route path='/Home' component={Home}></Route>
                     <Route path='/Blog/' component={Blog}></Route>
                     <Route path='/Tools' component={Tools}></Route>
+                    <Route path='*' component={NotFound404}></Route>
                 </Switch>
                 
             </div>
