@@ -26,13 +26,11 @@ const useStyles = makeStyles({
 export default function Postcard(props) {
   const classes = useStyles();
   const post = props.post;
-  console.log(post);
-  const curPath="/Blog";
   return (
     
     <div>
     <Card className={classes.root}>
-      <Link to={curPath+post.link} className={classes.link}>
+      <Link to={post.url} className={classes.link}>
       <CardActionArea>
         <CardContent className={classes.content}>
           <Typography gutterBottom variant="h5" component="h2">

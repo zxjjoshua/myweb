@@ -20,7 +20,7 @@ export default class Main extends React.Component{
             <div className={classes.main}>
                 <Switch>
                     <Route path='/Home' component={Home}></Route>
-                    <Route path='/Blog/' component={Blog}></Route>
+                    <Route path='/Blog' component={Blog}></Route>
                     <Route path='/Tools' component={Tools}></Route>
                     <Route path='*' component={NotFound404}></Route>
                 </Switch>

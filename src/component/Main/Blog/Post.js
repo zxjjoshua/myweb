@@ -1,6 +1,5 @@
 import React from 'react';
 import Markdown from "react-markdown"
-import ReactMarkdown from 'react-markdown';
 
 
 
@@ -17,28 +16,27 @@ export default class Post extends React.Component{
         }
     }
 
+    
     componentDidMount(){
-        const myHeaders = new Headers({
-            "Content-Type": "text/markdown",
-            Accept: "text/markdown"
-          });
-        const url="/"+this.state.id;
-        console.log(url)
-
-        fetch(url,myHeaders)
+        const url="http://localhost:3333/api/blogs/blogarticle/"+this.state.id+"/";
+        fetch(url,{
+            method:"GET",
+            'Access-Control-Allow-Origin':'*',
+            headers:{
+                'Accept': 'application/json',
+            },
+        })
         .then((response)=>{
-            console.log(response)
             if (response===undefined){
                 return "unable to locate resource";
             }
-            return response.text()
+            return response.json()
         })
         .then(
-            (text)=>{
-                console.log(text)
+            (data)=>{
                 this.setState({
                     loadSucc:true,
-                    post:text
+                    post:data["article"]["content"]
                 })  
             },
             (error)=>{

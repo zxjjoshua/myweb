@@ -59,7 +59,6 @@ export default class Nav extends React.Component{
         const container = window !== undefined ? () => window().document.body : undefined;
     
         const changeValue=(value)=>{
-          console.log(value);
             this.setState({
                 current:this.state.topics[value],
             });

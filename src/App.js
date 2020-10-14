@@ -47,6 +47,8 @@ const useStyles = makeStyles((theme) => ({
   },
   main:{
     marginTop: headerhight,
+    width:'100%',
+    margin:'20px auto',
   },
   postcard:{
     width: '100%',
@@ -58,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   let topics=['Home', 'Blog', 'Tools'];
-  let paths=['/Home', '/Blog', '/Tools'];
+  let paths=['/Home', '/Blog/bloglist/?offset=0', '/Tools'];
   const classes=useStyles();
 
 
@@ -70,13 +72,6 @@ function App() {
       
       <Route path="/" render={(props)=><Nav topics={topics} paths={paths} classes={classes} route={props} />}/>
       
-      {/* <Drawer classes={classes} drawerWidth={drawerWidth}/> */}
-
-    {/* <Nav topics={topics} paths={paths}/>
-      <div>
-      <Sidebar topics={topics} className={classes.sidebar}/>
-      <Main className={classes.Main}/>
-      </div> */}
     <Main classes={classes}/>
     </div>
   );

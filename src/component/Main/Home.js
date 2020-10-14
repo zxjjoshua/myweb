@@ -1,5 +1,5 @@
 import React from 'react';
-import post1 from "./Blog/blog-post.1.md"
+
 
 export default class Home extends React.Component{
     constructor(props){
@@ -17,13 +17,7 @@ export default class Home extends React.Component{
         )
     }
     componentDidMount(){
-        fetch(post1)
-        .then((response)=>{return response.text()})
-        .then((text)=>{
-            this.setState({
-                mypost:text,
-            })
-        });
+
     }
 
     render(){
