@@ -145,7 +145,6 @@ export default class PostEdit extends Component {
                             publishMsg:this.getWarningAlert(resp.msg),
                         })
                     }
-                    
                     break;
                 case 400:
                     // bad request 
@@ -164,21 +163,25 @@ export default class PostEdit extends Component {
                     this.setState({
                         publishMsg:this.getErrorAlert("resource forbidden"),
                     })
+                    break;
                 case 404:
                     // resource not found
                     this.setState({
                         publishMsg:this.getErrorAlert("resource not found"),
                     })
+                    break;
                 case 500:
                     // server failure
                     this.setState({
                         publishMsg:this.getErrorAlert("server error"),
                     })
+                    break;
                 default:
                     // server failure
                     this.setState({
                         publishMsg:this.getErrorAlert("server error"),
                     })
+                    break;
             }
         }
         console.log(resp.code+"-----after fetch");
@@ -354,13 +357,12 @@ export default class PostEdit extends Component {
 
 
     render(){
-        const classes=style;
         console.log(this.state);
 
         const EditWindow=this.getEditWindow();
 
         // const UploadWindow=this.getUploadWindow(this.state.tabIndex,1);
-        const infoDialog=<InfoDialog isOpen={this.state.curState==3}/>
+        const infoDialog=<InfoDialog isOpen={this.state.curState===3}/>
 
         return (
             <div>
