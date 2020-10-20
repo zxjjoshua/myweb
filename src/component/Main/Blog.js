@@ -83,7 +83,6 @@ class Blog extends React.Component{
         })},
         (error)=>{
             console.log(error);
-
         }
         );
     }
@@ -111,8 +110,6 @@ class Blog extends React.Component{
         return (
             <div className={classes.root}>
                 <Switch>
-                    {/* <Route  path="/Blog" exact><Redirect to="/Blog/?offset=0" /></Route> */}
-                    {/* <Route path="/Blog/bloglist/">{this.state.posts==null?NotFound404:postbody}</Route> */}
                     <Route path="/Blog/bloglist/" component={BlogList}/>
                     <Route path="/Blog/Post/:id" render={(params)=><Post id={params.match.params.id} classes={classes}/>}></Route>
                 </Switch>

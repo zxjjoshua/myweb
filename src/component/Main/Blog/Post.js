@@ -1,5 +1,6 @@
 import React from 'react';
 import Markdown from "react-markdown"
+import WaitLoading from '../../common/WaitLoading';
 
 
 
@@ -48,12 +49,18 @@ export default class Post extends React.Component{
         )
 
     }
+
+
     render()
     {    
         const classes=this.state.classes;
+        let postbody=<WaitLoading msg="fetching post now"/>;
+        if(this.state.loadSucc){
+            postbody=<Markdown children={this.state.post} />
+        }
         return (
             <div className={classes.blogFrame}>
-                <Markdown children={this.state.loadSucc?this.state.post:this.state.altertext} />
+                {postbody}
             </div>
             
         )

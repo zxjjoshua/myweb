@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import NotFound404 from "../../DefaultPage/NotFound404.js"
 import PageNav from "../../common/PageNav";
 import Postcard from "./Postcard";
+import WaitLLoading from "../../common/WaitLoading.js"
+import WaitLoading from '../../common/WaitLoading.js';
 
 
 export default class BlogList extends Component{
@@ -116,7 +118,7 @@ export default class BlogList extends Component{
     }
 
     render(){
-        let postbody=null;
+        let postbody=<WaitLoading msg="resource loading"/>;
         if (this.state.posts!=null){
             postbody=this.state.posts.map((post,i)=>{
                 return (<Postcard key={i} post={post} image={post['images']}/>)

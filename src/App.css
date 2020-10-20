@@ -53,3 +53,7 @@ code{
 a{
   text-decoration: none;
 }
+
+.hiden{
+  visibility: "hidden";
+}

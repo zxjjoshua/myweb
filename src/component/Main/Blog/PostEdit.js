@@ -7,24 +7,26 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Input from '@material-ui/core/Input';
+import {Alert,AlertTitle} from '@material-ui/lab';
 
 
-// import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 
 import PropTypes from 'prop-types';
-// import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
-// const style=theme=>({
-//     root:{
-        
-//     }
-// })
+import InfoDialog from '../../common/InfoDialog.js';
+import { InfoOutlined } from '@material-ui/icons';
+
+const style=theme=>({
+    hidden:{
+        visibility:"hidden",
+    }
+})
 
 // const useStyles = makeStyles((theme) => ({
 //     root: {
@@ -60,6 +62,9 @@ export default class PostEdit extends Component {
                 content:"",
             },
             tabIndex:0,
+            curState:0,
+            publishMsg:"",
+            // states: 0--normal, 1---posting, 2---post succ, 3---error
         })
     }
 
@@ -111,15 +116,14 @@ export default class PostEdit extends Component {
         return JSON.stringify(data);
     }
 
-    publishOnlcik(event){
+    async publishOnlcik(event){
         console.log(event);
         let url="http://localhost:3333/api/blogs/blogarticle/";
 
         console.log(this.state+"----this.state");
         const formData=this.passByFormData(1);
-        const jsonData=this.passByJsonData(1);
         
-        fetch(url,{
+        const resp = await fetch(url,{
             method:"POST",
             'Access-Control-Allow-Origin':'*',
             headers:{
@@ -127,12 +131,100 @@ export default class PostEdit extends Component {
             },
             body:formData,
         })
-        .then((response)=>{return response.json()})
-        .then(data=>{
-            console.log(data)
-        })
-        this.state.handleClose();
+        .then((response)=>{return response.json()});
+        if(resp){
+            switch(resp.code){
+                case 200:
+                    // succ
+                    if (resp.isSucc){
+                        this.setState({
+                            publishMsg:this.getSuccAlert(resp.msg),
+                        })
+                    }else{
+                        this.setState({
+                            publishMsg:this.getWarningAlert(resp.msg),
+                        })
+                    }
+                    
+                    break;
+                case 400:
+                    // bad request 
+                    this.setState({
+                        publishMsg:this.getErrorAlert("bad request"),
+                    })
+                    break;
+                case 401:
+                    // unauthorized
+                    this.setState({
+                        publishMsg:this.getErrorAlert("need login"),
+                    })
+                    break;
+                case 403:
+                    // forbidden
+                    this.setState({
+                        publishMsg:this.getErrorAlert("resource forbidden"),
+                    })
+                case 404:
+                    // resource not found
+                    this.setState({
+                        publishMsg:this.getErrorAlert("resource not found"),
+                    })
+                case 500:
+                    // server failure
+                    this.setState({
+                        publishMsg:this.getErrorAlert("server error"),
+                    })
+                default:
+                    // server failure
+                    this.setState({
+                        publishMsg:this.getErrorAlert("server error"),
+                    })
+            }
+        }
+        console.log(resp.code+"-----after fetch");
+        console.log("close the window now");
+        // this.state.handleClose();
 
+    }
+
+    getErrorAlert(msg){
+        return (
+            <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                {msg} <strong> check it out!</strong>
+            </Alert>
+        )
+    }
+
+    getInfoAlert(msg){
+        return (
+            <Alert severity="info">
+                <AlertTitle>Info</AlertTitle>
+                {msg} <strong> check it out!</strong>
+            </Alert>
+        )
+    }
+
+    getWarningAlert(msg){
+        return (
+            <Alert severity="warning">
+                <AlertTitle>warning</AlertTitle>
+                {msg} <strong> check it out!</strong>
+            </Alert>
+        )
+    }
+
+    getSuccAlert(msg){
+        return (
+            <Alert severity="success">
+                <AlertTitle>Success</AlertTitle>
+                {msg} <strong> check it out!</strong>
+            </Alert>
+        )
+    }
+
+    showInfoDialogAfterPost(){
+        
     }
 
     titleOnChange(event){
@@ -256,21 +348,24 @@ export default class PostEdit extends Component {
         );
     }
 
+    handleShowInfoDialog(){
+        
+    }
+
 
     render(){
-        // const classes=style;
-        // const theme = {
-        //     direction:"horizontal",
-        // }
+        const classes=style;
         console.log(this.state);
 
         const EditWindow=this.getEditWindow();
 
         // const UploadWindow=this.getUploadWindow(this.state.tabIndex,1);
-
+        const infoDialog=<InfoDialog isOpen={this.state.curState==3}/>
 
         return (
             <div>
+              {infoDialog}
+              
               <Dialog open={this.props.EditOpen} 
               onClose={this.state.handleClose} 
               aria-labelledby="form-dialog-title"
@@ -278,7 +373,7 @@ export default class PostEdit extends Component {
               fullWidth={true}>
                 <DialogTitle id="form-dialog-title">Create Your Post</DialogTitle>
                 <DialogContent>
-
+                
 
                 <AppBar position="static" color="default">
                     <Tabs
@@ -293,19 +388,11 @@ export default class PostEdit extends Component {
                     <Tab label="Upload File" {...a11yProps(1)} />
                     </Tabs>
                 </AppBar>
-
-                {/* <TabPanel value={this.state.tabIndex} index={0} dir={theme.direction}>
-                Item One
-                </TabPanel>
-                <TabPanel value={this.state.tabIndex} index={1} dir={theme.direction}>
-                Item Two
-                </TabPanel>
-                <TabPanel value={this.state.tabIndex} index={2} dir={theme.direction}>
-                Item Three
-                </TabPanel> */}
+                {this.state.publishMsg}
+                
 
                 {EditWindow}
-                  
+                
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={this.state.handleClose} color="primary">
